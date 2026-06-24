@@ -1,0 +1,14 @@
+===============================================================================
+ECOGRID SYSTEM - ARCHITECTURAL DECISION REPORT
+===============================================================================
+1. Quyết định bóc tách GridEntity cũ dựa trên nguyên lý phân biệt "Bản chất" và "Năng lực".
+2. Sử dụng Abstract Class (HardwareDevice) cho thiết bị vật lý nhằm chia sẻ trạng thái
+   cốt lõi (id, voltage, temperature). Do Java có cơ chế đơn kế thừa dữ liệu, việc đưa 
+   thuộc tính vật lý vào đây giúp đảm bảo tính đóng gói và tái sử dụng mã nguồn an toàn.
+3. Sử dụng Interface (CloudConnectable) cho dịch vụ mạng vì kết nối là một "năng lực hành vi" 
+   tùy chọn (đặc tính "is-able-to"). 
+4. Giải pháp này giúp CloudBillingService (phần mềm) giải phóng hoàn toàn khỏi các thuộc tính 
+   vật lý rác (-1.0), tối ưu hóa bộ nhớ cấp phát trên Heap.
+5. Đồng thời loại bỏ triệt để các hàm triển khai rỗng ({}) ở các thiết bị offline sau này, 
+   đáp ứng nghiêm ngặt nguyên lý ISP (Interface Segregation Principle).
+===============================================================================
